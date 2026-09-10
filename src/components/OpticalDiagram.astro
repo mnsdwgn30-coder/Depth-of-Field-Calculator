@@ -1,0 +1,193 @@
+---
+---
+
+<div class="glass-panel diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title-group">
+      <div class="badge badge-cyan" data-i18n="diag.camera_pos">Optical Simulation</div>
+      <h3 class="diagram-title" data-i18n="diag.title">Real-Time Optical Ray & Depth Zone</h3>
+    </div>
+    <div class="diagram-stats mono" id="diagram-dof-summary">
+      DOF Zone: <span class="cyan-text" id="diag-summary-val">0.34 m</span>
+    </div>
+  </div>
+
+  <div class="visualizer-stage" id="optical-stage-container">
+    <svg id="optical-svg" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet" class="optical-svg">
+      <defs>
+        <!-- Gradients -->
+        <linearGradient id="dofZoneGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.35"/>
+          <stop offset="50%" stop-color="#10b981" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.35"/>
+        </linearGradient>
+
+        <linearGradient id="coneGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.05"/>
+        </linearGradient>
+
+        <linearGradient id="infinityFade" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10b981" stop-opacity="0.45"/>
+          <stop offset="85%" stop-color="#10b981" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+        </linearGradient>
+
+        <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1"/>
+        </pattern>
+
+        <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      </defs>
+
+      <!-- Background Grid -->
+      <rect width="900" height="280" fill="url(#gridPattern)"/>
+
+      <!-- Optical Axis Line -->
+      <line x1="100" y1="140" x2="880" y2="140" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+
+      <!-- Ray Cone Light Path -->
+      <polygon id="svg-light-cone" points="100,140 850,40 850,240" fill="url(#coneGradient)"/>
+
+      <!-- In-Focus Zone Polygon/Rect -->
+      <rect id="svg-dof-zone" x="350" y="50" width="160" height="180" rx="8" fill="url(#dofZoneGradient)" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+      <!-- Camera Body & Lens Graphic -->
+      <g id="svg-camera-group" transform="translate(40, 90)">
+        <!-- Camera Body -->
+        <rect x="0" y="10" width="50" height="80" rx="6" fill="#1e293b" stroke="#00e5ff" stroke-width="1.5"/>
+        <rect x="15" y="0" width="20" height="10" rx="2" fill="#334155" stroke="#00e5ff" stroke-width="1"/>
+        <circle cx="25" cy="50" r="18" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+        <!-- Sensor Plane Line -->
+        <line x1="25" y1="18" x2="25" y2="82" stroke="#ffb703" stroke-width="2.5"/>
+        <text x="25" y="105" fill="#ffb703" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">SENSOR</text>
+
+        <!-- Lens Barrel -->
+        <rect x="50" y="24" width="35" height="52" rx="3" fill="#334155" stroke="#64748b" stroke-width="1"/>
+        <!-- Aperture Iris Indicator -->
+        <line id="svg-iris-top" x1="68" y1="24" x2="68" y2="44" stroke="#00e5ff" stroke-width="2.5"/>
+        <line id="svg-iris-bot" x1="68" y1="56" x2="68" y2="76" stroke="#00e5ff" stroke-width="2.5"/>
+      </g>
+
+      <!-- Near Focus Boundary Line -->
+      <g id="svg-near-group" transform="translate(350, 0)">
+        <line x1="0" y1="35" x2="0" y2="245" stroke="#00e5ff" stroke-width="2"/>
+        <polygon points="-5,35 5,35 0,25" fill="#00e5ff"/>
+        <polygon points="-5,245 5,245 0,255" fill="#00e5ff"/>
+        <text x="0" y="22" fill="#00e5ff" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="600" text-anchor="middle" id="svg-near-label">NEAR: 2.15m</text>
+      </g>
+
+      <!-- Subject Target Line & Icon -->
+      <g id="svg-subject-group" transform="translate(420, 0)">
+        <line x1="0" y1="30" x2="0" y2="250" stroke="#ffb703" stroke-width="2.5" stroke-dasharray="6 3" filter="url(#glowFilter)"/>
+        <!-- Target Marker Pin -->
+        <circle cx="0" cy="140" r="12" fill="#ffb703" fill-opacity="0.2" stroke="#ffb703" stroke-width="2"/>
+        <circle cx="0" cy="140" r="4" fill="#ffb703"/>
+        <text x="0" y="270" fill="#ffb703" font-size="12" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle" id="svg-subject-label">🎯 SUBJECT: 2.50m</text>
+      </g>
+
+      <!-- Far Focus Boundary Line -->
+      <g id="svg-far-group" transform="translate(510, 0)">
+        <line x1="0" y1="35" x2="0" y2="245" stroke="#10b981" stroke-width="2"/>
+        <polygon points="-5,35 5,35 0,25" fill="#10b981"/>
+        <polygon points="-5,245 5,245 0,255" fill="#10b981"/>
+        <text x="0" y="22" fill="#10b981" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="600" text-anchor="middle" id="svg-far-label">FAR: 2.97m</text>
+      </g>
+
+      <!-- Hyperfocal Distance Marker -->
+      <g id="svg-hyper-group" transform="translate(720, 0)">
+        <line x1="0" y1="60" x2="0" y2="220" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <text x="0" y="52" fill="#c084fc" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle" id="svg-hyper-label">⚡ HYPERFOCAL: 14.8m</text>
+      </g>
+    </svg>
+
+    <!-- Interactive Visual Legend -->
+    <div class="diagram-legend">
+      <div class="legend-item"><span class="legend-dot dot-yellow"></span> Subject Plane</div>
+      <div class="legend-item"><span class="legend-dot dot-cyan"></span> Acceptable Sharp Focus Zone (DOF)</div>
+      <div class="legend-item"><span class="legend-dot dot-green"></span> Far Limit</div>
+      <div class="legend-item"><span class="legend-dot dot-purple"></span> Hyperfocal Mark</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .diagram-card {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .diagram-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .diagram-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .diagram-stats {
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+  }
+
+  .cyan-text {
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .optical-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    min-height: 220px;
+  }
+
+  .diagram-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0.85rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-yellow { background: var(--accent-amber); box-shadow: 0 0 6px var(--accent-amber); }
+  .dot-cyan { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+  .dot-green { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+  .dot-purple { background: var(--accent-purple); box-shadow: 0 0 6px var(--accent-purple); }
+</style>

@@ -1,0 +1,681 @@
+---
+import { CAMERA_DATABASE, STANDARD_APERTURES, POPULAR_FOCAL_LENGTHS } from '../data/cameras';
+import LensScale from './LensScale.astro';
+import OpticalDiagram from './OpticalDiagram.astro';
+---
+
+<section class="calculator-section" id="dof-calculator">
+  
+  <!-- Main Classic DOFMaster Card Container -->
+  <div class="dofmaster-main-wrapper">
+    
+    <div class="dofmaster-box-frame">
+      <div class="dofmaster-box-topbar">
+        <div class="dofmaster-logo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><circle cx="12" cy="12" r="4"/></svg>
+          <span>DEPTH OF FIELD CALCULATOR</span>
+        </div>
+        <div class="unit-selector-radios" id="dofmaster-unit-radios">
+          <label class="radio-label">
+            <input type="radio" name="dof-units" value="metric" checked />
+            <span>Meters / cm</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="dof-units" value="imperial" />
+            <span>Feet / inches</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2-Column Split: Form Inputs on Left, Results Table on Right -->
+      <div class="dofmaster-grid">
+        
+        <!-- LEFT: Inputs Form -->
+        <div class="dofmaster-inputs-col">
+          
+          <!-- Camera Select -->
+          <div class="form-row-item">
+            <label for="camera-select" class="dofmaster-label" data-i18n="calc.camera">Camera, format, or sensor type:</label>
+            <div class="brand-quick-filter">
+              <button type="button" class="brand-pill active" data-brand="all">All</button>
+              <button type="button" class="brand-pill" data-brand="Canon">Canon</button>
+              <button type="button" class="brand-pill" data-brand="Sony">Sony</button>
+              <button type="button" class="brand-pill" data-brand="Nikon">Nikon</button>
+              <button type="button" class="brand-pill" data-brand="Fujifilm">Fuji</button>
+              <button type="button" class="brand-pill" data-brand="Cinema (ARRI/RED/BMPCC)">Cinema</button>
+              <button type="button" class="brand-pill" data-brand="Medium & Large Format">4x5/Med</button>
+            </div>
+            <select id="camera-select" class="dofmaster-select">
+              {CAMERA_DATABASE.map((cam) => (
+                <option 
+                  value={cam.id} 
+                  data-brand={cam.brand}
+                  data-coc={cam.coc}
+                  data-crop={cam.cropFactor}
+                  data-width={cam.sensorWidth}
+                  data-height={cam.sensorHeight}
+                  selected={cam.id === 'canon-full-frame'}
+                >
+                  {cam.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Focal Length -->
+          <div class="form-row-item">
+            <div class="label-with-value">
+              <label for="focal-length-num" class="dofmaster-label" data-i18n="calc.focal_length">Focal length (mm):</label>
+              <div class="quick-input-wrap">
+                <input type="number" id="focal-length-num" class="dofmaster-num-input mono" min="4" max="1200" step="1" value="50" />
+                <span class="input-suffix">mm</span>
+              </div>
+            </div>
+            <div class="quick-focal-pills">
+              {POPULAR_FOCAL_LENGTHS.slice(0, 10).map((f) => (
+                <button type="button" class={`f-pill ${f === 50 ? 'active' : ''}`} data-focal={f}>{f}mm</button>
+              ))}
+            </div>
+            <input type="range" id="focal-length-slider" min="10" max="600" step="1" value="50" class="dof-range-slider" />
+          </div>
+
+          <!-- Selected f-stop -->
+          <div class="form-row-item">
+            <div class="label-with-value">
+              <label for="aperture-num" class="dofmaster-label" data-i18n="calc.aperture">Selected f-stop:</label>
+              <div class="quick-input-wrap">
+                <span class="input-prefix">f /</span>
+                <input type="number" id="aperture-num" class="dofmaster-num-input mono" min="0.7" max="128" step="0.1" value="2.8" />
+              </div>
+            </div>
+            <div class="quick-aperture-grid" id="aperture-button-grid">
+              {STANDARD_APERTURES.slice(0, 12).map((ap) => (
+                <button type="button" class={`ap-pill ${ap.value === 2.8 ? 'active' : ''}`} data-aperture={ap.value}>
+                  {ap.label}
+                </button>
+              ))}
+            </div>
+            <input type="range" id="aperture-slider" min="0.7" max="64" step="0.1" value="2.8" class="dof-range-slider" />
+          </div>
+
+          <!-- Subject Distance -->
+          <div class="form-row-item">
+            <div class="label-with-value">
+              <label for="distance-num" class="dofmaster-label" data-i18n="calc.subject_dist">Subject distance:</label>
+              <div class="quick-input-wrap">
+                <input type="number" id="distance-num" class="dofmaster-num-input mono" min="0.1" max="10000" step="0.1" value="2.5" />
+                <span class="input-suffix" id="distance-unit-label">m</span>
+              </div>
+            </div>
+            <div class="quick-dist-pills">
+              <button type="button" class="d-pill" data-dist="0.5">0.5m</button>
+              <button type="button" class="d-pill" data-dist="1.5">1.5m</button>
+              <button type="button" class="d-pill active" data-dist="2.5">2.5m</button>
+              <button type="button" class="d-pill" data-dist="5.0">5.0m</button>
+              <button type="button" class="d-pill" data-dist="10.0">10m</button>
+              <button type="button" class="d-pill" data-dist="30.0">30m</button>
+            </div>
+            <input type="range" id="distance-slider" min="0.2" max="25" step="0.05" value="2.5" class="dof-range-slider" />
+          </div>
+
+          <!-- Teleconverter / Extender Option -->
+          <div class="teleconverter-row-simple">
+            <span class="dofmaster-label-sm" data-i18n="calc.teleconverter">Teleconverter:</span>
+            <div class="tc-pills-group" id="tc-buttons-group">
+              <button type="button" class="tc-btn active" data-tc="1.0">None (1.0x)</button>
+              <button type="button" class="tc-btn" data-tc="1.4">1.4x</button>
+              <button type="button" class="tc-btn" data-tc="2.0">2.0x</button>
+            </div>
+          </div>
+
+          <!-- Manual Calculate Button -->
+          <button type="button" class="dofmaster-calc-btn" id="dofmaster-calc-btn">
+            <span data-i18n="calc.btn">Calculate Depth of Field</span>
+            <span class="btn-arrow">➔</span>
+          </button>
+
+        </div>
+
+        <!-- RIGHT: The Iconic Classic DOFMaster Table -->
+        <div class="dofmaster-results-col">
+          
+          <div class="results-table-frame">
+            <table class="classic-dof-table mono">
+              <tbody>
+                <tr class="table-row-main">
+                  <td class="td-title" data-i18n="calc.subject_dist">Subject distance</td>
+                  <td class="td-data highlight-amber" id="table-val-subject">2.50 m</td>
+                </tr>
+
+                <tr class="table-section-banner">
+                  <td colspan="2" data-i18n="res.total_dof">Depth of field</td>
+                </tr>
+
+                <tr>
+                  <td class="td-sub-label">&nbsp;&nbsp;&nbsp;<span data-i18n="res.near_limit">Near limit</span></td>
+                  <td class="td-data text-cyan" id="table-val-near">2.37 m</td>
+                </tr>
+
+                <tr>
+                  <td class="td-sub-label">&nbsp;&nbsp;&nbsp;<span data-i18n="res.far_limit">Far limit</span></td>
+                  <td class="td-data text-green" id="table-val-far">2.65 m</td>
+                </tr>
+
+                <tr class="table-total-row">
+                  <td class="td-sub-label font-bold">&nbsp;&nbsp;&nbsp;<span data-i18n="res.total_dof">Total Depth of Field</span></td>
+                  <td class="td-data total-badge-val" id="table-val-total">0.28 m (28.0 cm)</td>
+                </tr>
+
+                <tr class="table-section-banner">
+                  <td colspan="2">Focus distribution</td>
+                </tr>
+
+                <tr>
+                  <td class="td-sub-label">&nbsp;&nbsp;&nbsp;<span data-i18n="res.in_front">In front of subject</span></td>
+                  <td class="td-data" id="table-val-front">0.13 m (46.4%)</td>
+                </tr>
+
+                <tr>
+                  <td class="td-sub-label">&nbsp;&nbsp;&nbsp;<span data-i18n="res.behind">Behind subject</span></td>
+                  <td class="td-data" id="table-val-rear">0.15 m (53.6%)</td>
+                </tr>
+
+                <tr class="table-section-banner">
+                  <td colspan="2">Hyperfocal & Lens Optics</td>
+                </tr>
+
+                <tr class="table-hyper-row">
+                  <td class="td-title font-bold" data-i18n="res.hyperfocal">Hyperfocal distance</td>
+                  <td class="td-data text-purple font-bold" id="table-val-hyper">29.81 m</td>
+                </tr>
+
+                <tr>
+                  <td class="td-title" data-i18n="res.coc">Circle of confusion</td>
+                  <td class="td-data" id="table-val-coc">0.030 mm</td>
+                </tr>
+
+                <tr>
+                  <td class="td-title" data-i18n="res.fov">Field of view (diagonal)</td>
+                  <td class="td-data" id="table-val-fov">46.8°</td>
+                </tr>
+
+                <tr>
+                  <td class="td-title">35mm Equivalent</td>
+                  <td class="td-data text-muted" id="table-val-equiv">50mm @ f/2.8</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Focus Range Bar -->
+          <div class="focus-strip-container">
+            <div class="focus-strip-labels mono">
+              <span class="text-cyan" id="res-front-pct">46.4% In Front</span>
+              <span class="highlight-amber">🎯 Subject</span>
+              <span class="text-green" id="res-rear-pct">53.6% Behind</span>
+            </div>
+            <div class="focus-track">
+              <div class="focus-bar-front" id="dist-bar-front" style="width: 46.4%;"></div>
+              <div class="focus-center-pin"></div>
+              <div class="focus-bar-rear" id="dist-bar-rear" style="width: 53.6%;"></div>
+            </div>
+          </div>
+
+          <!-- Sensor Info Pill -->
+          <div class="sensor-info-bottom mono" id="sensor-specs-display">
+            <span>Sensor: 36.0 × 24.0 mm</span> • <span>Crop: 1.00x</span> • <span>CoC: 0.030 mm</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Physical Lens Barrel DOF Scale Visualizer -->
+    <LensScale />
+
+    <!-- Real-time SVG Optical Ray Tracing Diagram -->
+    <OpticalDiagram />
+
+  </div>
+</section>
+
+<style>
+  .calculator-section {
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .dofmaster-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .dofmaster-box-frame {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-cyan);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px -10px var(--accent-cyan-glow), 0 0 0 1px var(--border-subtle);
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .dofmaster-box-topbar {
+    background: linear-gradient(90deg, var(--bg-input), var(--bg-card-hover));
+    border-bottom: 2px solid rgba(0, 229, 255, 0.35);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .dofmaster-logo-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+  }
+
+  .dofmaster-logo-title svg {
+    color: var(--accent-cyan);
+  }
+
+  .unit-selector-radios {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-main);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .radio-label input[type="radio"] {
+    accent-color: var(--accent-cyan);
+    cursor: pointer;
+  }
+
+  /* 2-Column Grid */
+  .dofmaster-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 0;
+  }
+
+  @media (max-width: 880px) {
+    .dofmaster-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Left Inputs Column */
+  .dofmaster-inputs-col {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .form-row-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .dofmaster-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .dofmaster-label-sm {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .brand-quick-filter {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: none;
+  }
+
+  .brand-quick-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brand-pill {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+
+  .brand-pill.active {
+    background: var(--accent-cyan-glow);
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+  }
+
+  .dofmaster-select {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .dofmaster-select:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 10px var(--accent-cyan-glow);
+  }
+
+  .label-with-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .quick-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.45rem;
+  }
+
+  .dofmaster-num-input {
+    width: 60px;
+    background: transparent;
+    border: none;
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: right;
+    outline: none;
+  }
+
+  .input-suffix, .input-prefix {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .quick-focal-pills, .quick-dist-pills {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: none;
+  }
+
+  .f-pill, .d-pill {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+
+  .f-pill.active, .d-pill.active {
+    background: var(--accent-cyan-glow);
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .quick-aperture-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.3rem;
+  }
+
+  .ap-pill {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .ap-pill.active {
+    background: var(--accent-cyan);
+    color: #090d16;
+    border-color: var(--accent-cyan);
+    font-weight: 800;
+  }
+
+  [data-theme="light"] .ap-pill.active {
+    color: #ffffff;
+  }
+
+  .dof-range-slider {
+    margin: 0.25rem 0;
+  }
+
+  .teleconverter-row-simple {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-input);
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .tc-pills-group {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .tc-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.72rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .tc-btn.active {
+    background: var(--accent-amber-glow);
+    color: var(--accent-amber);
+    border-color: var(--accent-amber);
+    font-weight: 700;
+  }
+
+  .dofmaster-calc-btn {
+    background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px var(--accent-cyan-glow);
+    transition: all 0.15s ease;
+  }
+
+  .dofmaster-calc-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px var(--accent-cyan-glow);
+  }
+
+  /* Right Column: Classic DOFMaster Results Table */
+  .dofmaster-results-col {
+    padding: 1.5rem;
+    background: var(--bg-card-hover);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .results-table-frame {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-card);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .classic-dof-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .classic-dof-table td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .table-section-banner td {
+    background: var(--bg-input);
+    color: var(--accent-cyan);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .td-title {
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  .td-sub-label {
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+  }
+
+  .td-data {
+    text-align: right;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .highlight-amber { color: var(--accent-amber) !important; font-weight: 700; }
+  .text-cyan { color: var(--accent-cyan) !important; font-weight: 700; }
+  .text-green { color: var(--accent-green) !important; font-weight: 700; }
+  .text-purple { color: var(--accent-purple) !important; font-weight: 700; }
+  .text-muted { color: var(--text-muted) !important; }
+  .font-bold { font-weight: 700 !important; color: var(--text-primary); }
+
+  .table-total-row td {
+    background: var(--accent-cyan-glow);
+    border-top: 1px solid var(--accent-cyan);
+    border-bottom: 1px solid var(--accent-cyan);
+  }
+
+  .total-badge-val {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: var(--text-primary) !important;
+  }
+
+  .table-hyper-row td {
+    background: rgba(192, 132, 252, 0.08);
+  }
+
+  /* Focus Distribution Strip */
+  .focus-strip-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+  }
+
+  .focus-strip-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .focus-track {
+    height: 8px;
+    background: var(--bg-input);
+    border-radius: var(--radius-full);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .focus-bar-front {
+    height: 100%;
+    background: linear-gradient(90deg, #0284c7, var(--accent-cyan));
+  }
+
+  .focus-center-pin {
+    width: 3px;
+    height: 100%;
+    background: var(--accent-amber);
+    box-shadow: 0 0 6px var(--accent-amber);
+  }
+
+  .focus-bar-rear {
+    height: 100%;
+    background: linear-gradient(90deg, #059669, var(--accent-green));
+  }
+
+  .sensor-info-bottom {
+    font-size: 0.72rem;
+</style>

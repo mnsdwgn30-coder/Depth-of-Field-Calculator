@@ -1,0 +1,78 @@
+---
+import '../styles/theme.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+}
+
+const {
+  title = "Depth of Field (DOF) Calculator Pro - Precision Optical Suite",
+  description = "Free online Depth of Field (DOF) Calculator with real-time optical diagram, hyperfocal charts, and support for Canon, Sony, Nikon, Fujifilm, Cinema, Macro, and Large Format.",
+  keywords = "depth of field calculator, dof calculator, best depth of field calculator, hyperfocal distance calculator, dofmaster, canon dof, nikon dof, sony dof, fujifilm dof, macro depth of field, cinematography dof, 4x5 large format dof"
+} = Astro.props;
+
+const canonicalURL = "https://depthoffieldcalculator.org";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300e5ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='m4.93 4.93 4.24 4.24'/><path d='m14.83 9.17 4.24-4.24'/><path d='m14.83 14.83 4.24 4.24'/><path d='m9.17 14.83-4.24 4.24'/><circle cx='12' cy='12' r='4'/></svg>" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="DOF Optical Labs" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="DOF Master Pro" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Depth of Field (DOF) Calculator Pro",
+      "url": canonicalURL,
+      "description": description,
+      "applicationCategory": "PhotographyApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Hyperfocal Distance Calculation",
+        "Real-time 2D Optical Ray Diagram",
+        "Physical Lens Barrel DOF Scale Markings",
+        "Canon, Sony, Nikon, Fujifilm 150+ Camera Presets",
+        "Macro Photography Magnification & Effective Aperture",
+        "Super 35 & Cinema Film Camera Formats",
+        "Microscope & Machine Vision Depth of Focus",
+        "Side-by-Side Setup Comparison",
+        "Printable Landscape Hyperfocal Table"
+      ]
+    })} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

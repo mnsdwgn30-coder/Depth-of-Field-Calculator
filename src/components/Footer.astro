@@ -1,0 +1,156 @@
+---
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="footer-brand-title">DOF MASTER PRO</div>
+        <p class="footer-desc">
+          Professional Optical Physics Engine, Depth of Field Calculator, and Lens Scale Visualizer built for photographers, cinematographers, optical engineers, and macro specialists.
+        </p>
+        <div class="footer-tagline">Engineered for precision optics & geometric ray tracing.</div>
+      </div>
+
+      <div class="footer-links-col">
+        <div class="footer-col-title">Camera Brand Presets</div>
+        <ul class="footer-links-list">
+          <li><a href="#dof-calculator">Canon EOS R5 / R6 / APS-C</a></li>
+          <li><a href="#dof-calculator">Sony Alpha A7 IV / A7R V / FX3</a></li>
+          <li><a href="#dof-calculator">Nikon Z8 / Z9 / Z6 III / FX / DX</a></li>
+          <li><a href="#dof-calculator">Fujifilm X-T5 / GFX Medium Format</a></li>
+          <li><a href="#dof-calculator">Micro Four Thirds (OM / Lumix)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <div class="footer-col-title">Specialized Tools</div>
+        <ul class="footer-links-list">
+          <li><a href="#dof-calculator">DOFMaster Precision Calculator</a></li>
+          <li><a href="#comparison-section">Side-by-Side Equivalence Engine</a></li>
+          <li><a href="#specialized-section">Macro 1:1 Magnification Engine</a></li>
+          <li><a href="#specialized-section">ARRI / RED / Super 35 Cinema</a></li>
+          <li><a href="#hyperfocal-table-section">Printable Hyperfocal Table</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <div class="footer-col-title">Optics Reference</div>
+        <ul class="footer-links-list">
+          <li><a href="#theory-guide-section">Mathematical Formulas (H = f² / [N · c])</a></li>
+          <li><a href="#theory-guide-section">Circle of Confusion (CoC) Standards</a></li>
+          <li><a href="#theory-guide-section">Airy Disc Diffraction Limits</a></li>
+          <li><a href="#theory-guide-section">Landscape Hyperfocal Technique</a></li>
+          <li><a href="#theory-guide-section">Frequently Asked Questions (FAQ)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        © {new Date().getFullYear()} DOF Master Pro. Free & Open Optical Tool. Built with Astro.
+      </div>
+      <div class="footer-badge-mono mono">
+        OPTICAL ACCURACY: ISO 12233 & ZEISS STANDARD (c = d / 1730)
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #060910;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 3.5rem;
+    padding-bottom: 2.5rem;
+    margin-top: 4rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 960px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer-brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 380px;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .footer-col-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.85rem;
+  }
+
+  .footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-links-list a {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links-list a:hover {
+    color: var(--accent-cyan);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-badge-mono {
+    font-size: 0.72rem;
+    color: var(--accent-cyan);
+    background: rgba(0, 229, 255, 0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+  }
+</style>

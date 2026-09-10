@@ -1,0 +1,365 @@
+---
+---
+
+<div class="glass-panel theory-section" id="theory-guide-section">
+  <div class="theory-header">
+    <div class="badge badge-cyan" data-i18n="theory.title">Optics & Mathematics Guide</div>
+    <h2 class="theory-title" data-i18n="theory.title">Understanding Depth of Field (DOF), Physics & Formulas</h2>
+    <p class="theory-intro">
+      A comprehensive technical guide to optical depth of field, hyperfocal distance calculations, Circle of Confusion (CoC), diffraction limits, and sensor format equivalencies.
+    </p>
+  </div>
+
+  <div class="theory-cards-grid">
+    
+    <!-- CARD 1: What is Depth of Field? -->
+    <div class="theory-card">
+      <div class="card-icon-header">
+        <div class="t-icon">📷</div>
+        <h3 class="card-h3">What is Depth of Field (DOF)?</h3>
+      </div>
+      <p class="card-text">
+        <strong>Depth of Field (DOF)</strong> is the distance between the nearest and farthest objects in a scene that appear acceptably sharp in an image. Lenses can physically focus at only a single exact distance; all points before or behind that plane become progressively blurred into conical discs of light known as <em>Circles of Confusion</em>. When these blur circles remain smaller than the human eye or camera sensor can resolve, they appear in focus.
+      </p>
+      <div class="key-factors-box">
+        <div class="factor-item"><strong>1. Aperture (f-stop):</strong> Wider apertures (e.g. f/1.4) create shallow DOF; smaller apertures (e.g. f/16) yield deep DOF.</div>
+        <div class="factor-item"><strong>2. Focal Length:</strong> Longer telephoto lenses create shallower apparent DOF; wide-angle lenses provide greater depth.</div>
+        <div class="factor-item"><strong>3. Subject Distance:</strong> Moving closer to your subject decreases depth of field dramatically.</div>
+        <div class="factor-item"><strong>4. Sensor Format / CoC:</strong> Larger sensors require longer lenses for equivalent framing, producing shallower DOF.</div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Mathematical Formulas -->
+    <div class="theory-card">
+      <div class="card-icon-header">
+        <div class="t-icon">📐</div>
+        <h3 class="card-h3">Exact Depth of Field Formulas</h3>
+      </div>
+      <div class="formula-block mono">
+        <div class="formula-title">1. Hyperfocal Distance (H):</div>
+        <div class="formula-math">H = (f²) / (N · c) + f</div>
+        <div class="formula-legend">Where <strong>f</strong> = focal length (mm), <strong>N</strong> = f-number, <strong>c</strong> = circle of confusion (mm).</div>
+      </div>
+
+      <div class="formula-block mono">
+        <div class="formula-title">2. Near Focus Limit (D<sub>near</sub>):</div>
+        <div class="formula-math">D<sub>near</sub> = [s · (H - f)] / [H + s - 2f]</div>
+        <div class="formula-legend">Where <strong>s</strong> = subject distance from sensor plane.</div>
+      </div>
+
+      <div class="formula-block mono">
+        <div class="formula-title">3. Far Focus Limit (D<sub>far</sub>):</div>
+        <div class="formula-math">D<sub>far</sub> = [s · (H - f)] / [H - s] &nbsp; (if s ≥ H, D<sub>far</sub> = ∞)</div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Circle of Confusion Standards -->
+    <div class="theory-card">
+      <div class="card-icon-header">
+        <div class="t-icon">🎯</div>
+        <h3 class="card-h3">Circle of Confusion (CoC) Reference</h3>
+      </div>
+      <p class="card-text">
+        The Circle of Confusion (c) is traditionally determined by dividing sensor diagonal by 1500 or 1730 (Zeiss standard). Below are the industry reference values:
+      </p>
+      <div class="coc-table-mini mono">
+        <div class="coc-row head"><span>Sensor Format</span><span>Dimensions</span><span>CoC (mm)</span></div>
+        <div class="coc-row"><span>Large Format 8×10"</span><span>240 × 190 mm</span><span class="cyan-text">0.200 mm</span></div>
+        <div class="coc-row"><span>Large Format 4×5"</span><span>120 × 95 mm</span><span class="cyan-text">0.100 mm</span></div>
+        <div class="coc-row"><span>Medium Format (6×7)</span><span>69.5 × 56 mm</span><span class="cyan-text">0.060 mm</span></div>
+        <div class="coc-row"><span>Fujifilm GFX / X2D</span><span>43.8 × 32.9 mm</span><span class="cyan-text">0.038 mm</span></div>
+        <div class="coc-row"><span>Full Frame 35mm</span><span>36.0 × 24.0 mm</span><span class="cyan-text">0.030 mm</span></div>
+        <div class="coc-row"><span>APS-C (Sony / Nikon / Fuji)</span><span>23.5 × 15.6 mm</span><span class="cyan-text">0.020 mm</span></div>
+        <div class="coc-row"><span>APS-C (Canon 1.6x)</span><span>22.3 × 14.9 mm</span><span class="cyan-text">0.019 mm</span></div>
+        <div class="coc-row"><span>Micro Four Thirds (MFT)</span><span>17.3 × 13.0 mm</span><span class="cyan-text">0.015 mm</span></div>
+        <div class="coc-row"><span>Super 16mm Film</span><span>12.5 × 7.4 mm</span><span class="cyan-text">0.010 mm</span></div>
+        <div class="coc-row"><span>1/1.28" Smartphone (iPhone)</span><span>9.8 × 7.3 mm</span><span class="cyan-text">0.008 mm</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Macro & Diffraction Limits -->
+    <div class="theory-card">
+      <div class="card-icon-header">
+        <div class="t-icon">🔬</div>
+        <h3 class="card-h3">Macro Magnification & Diffraction limits</h3>
+      </div>
+      <p class="card-text">
+        In macro photography (1:1 magnification or higher), standard infinity formulas fail because the lens is extended far beyond its focal length.
+      </p>
+      <div class="key-factors-box">
+        <div class="factor-item">
+          <strong>Effective Aperture:</strong> N' = N · (1 + m). At 1:1 (m=1), an f/8 setting acts as effective <strong>f/16</strong>, losing 2 stops of light!
+        </div>
+        <div class="factor-item">
+          <strong>Macro Depth Formula:</strong> DOF = [2 · N · c · (m + 1)] / m²
+        </div>
+        <div class="factor-item">
+          <strong>Diffraction Airy Disc:</strong> d = 2.44 · λ · N. When the Airy disc exceeds the sensor pixel pitch or CoC, images soften regardless of lens quality.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ ACCORDION FOR SEARCH INTENTS -->
+  <div class="faq-accordion-container">
+    <h3 class="faq-main-title">Frequently Asked Questions (FAQ)</h3>
+    
+    <div class="faq-item">
+      <details class="faq-details">
+        <summary class="faq-summary">
+          <span>How does Cambridge in Colour / PhotoPills compare to this calculator?</span>
+          <span class="faq-toggle-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          This calculator uses the exact classical geometric optics and wave optics equations identical to PhotoPills, DOFMaster, and Cambridge in Colour, but introduces a <strong>live real-time optical ray visualizer</strong>, <strong>physical lens DOF scale markings</strong>, <strong>dynamic hyperfocal matrix generator</strong>, and specialized <strong>Microscope & Cinema</strong> modes directly in a fast web interface without requiring mobile app installations.
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-item">
+      <details class="faq-details">
+        <summary class="faq-summary">
+          <span>Why is Depth of Field on Canon APS-C slightly different than Sony / Nikon APS-C?</span>
+          <span class="faq-toggle-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          Canon APS-C sensors measure 22.3 × 14.9 mm (crop factor 1.60x, CoC 0.019 mm), whereas Sony, Nikon DX, and Fujifilm X sensors measure 23.5 × 15.6 mm (crop factor 1.53x, CoC 0.020 mm). The slightly smaller Canon sensor has a smaller circle of confusion, resulting in subtle differences in hyperfocal and near/far limits.
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-item">
+      <details class="faq-details">
+        <summary class="faq-summary">
+          <span>How do I use the Hyperfocal Distance in Landscape Photography?</span>
+          <span class="faq-toggle-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          1. Check the hyperfocal table for your focal length and chosen aperture (e.g. 24mm @ f/8 = 2.41m).<br/>
+          2. Switch lens to Manual Focus and set the distance scale or focus on an object at 2.41m.<br/>
+          3. Everything from 1.2m (half the hyperfocal distance) all the way to infinity (mountains, stars, horizon) will be in crisp focus!
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-item">
+      <details class="faq-details">
+        <summary class="faq-summary">
+          <span>How does 4x5 Large Format Depth of Field compare to 35mm Full Frame?</span>
+          <span class="faq-toggle-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          A standard normal lens on 4x5 sheet film is 150mm (comparable in angle of view to a 43mm lens on Full Frame). Because of the longer physical focal length, 4x5 has a much shallower depth of field at equivalent f-numbers. Large format photographers frequently stop down to f/22, f/32, or f/45 and use tilt/shift lens movements (Scheimpflug principle) to control the plane of focus.
+        </div>
+      </details>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  .theory-section {
+    padding: 2.25rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .theory-header {
+    margin-bottom: 2rem;
+  }
+
+  .theory-title {
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin-top: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .theory-intro {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 880px;
+    margin-top: 0.35rem;
+  }
+
+  .theory-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .theory-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .theory-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-icon-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .t-icon {
+    font-size: 1.5rem;
+  }
+
+  .card-h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .card-text {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .key-factors-box {
+    background: var(--bg-input);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .factor-item {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  .formula-block {
+    background: var(--bg-input);
+    border: 1px solid var(--accent-cyan-glow);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .formula-title {
+    font-size: 0.78rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .formula-math {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0.25rem 0;
+    padding: 0.2rem 0;
+  }
+
+  .formula-legend {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .coc-table-mini {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+    font-size: 0.78rem;
+  }
+
+  .coc-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 0.9fr;
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .coc-row.head {
+    background: var(--bg-input);
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .coc-row:last-child {
+    border-bottom: none;
+  }
+
+  /* FAQ Styles */
+  .faq-accordion-container {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .faq-main-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .faq-item {
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-details {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .faq-details:hover {
+    border-color: var(--accent-cyan);
+  }
+
+  .faq-summary {
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    list-style: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-toggle-icon {
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    transition: transform 0.2s ease;
+  }
+
+  .faq-details[open] .faq-toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.15rem 1.25rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+  }
+</style>

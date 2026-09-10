@@ -1,0 +1,348 @@
+---
+import { CAMERA_DATABASE, STANDARD_APERTURES } from '../data/cameras';
+---
+
+<div class="glass-panel comparison-section" id="comparison-section">
+  <div class="comparison-header">
+    <div class="badge badge-amber" data-i18n="cmp.title">Side-by-Side Equivalence Engine</div>
+    <h3 class="comparison-title" data-i18n="cmp.title">Camera & Lens Setup Comparison</h3>
+    <p class="comparison-desc" data-i18n="cmp.desc">Compare two different camera bodies, focal lengths, or apertures to see identical framing, depth of field differences, and equivalent light gathering.</p>
+  </div>
+
+  <div class="comparison-grid">
+    
+    <!-- SETUP A -->
+    <div class="setup-card setup-a">
+      <div class="setup-badge" data-i18n="cmp.setup_a">SETUP A (Reference)</div>
+      
+      <div class="setup-controls">
+        <div class="form-group">
+          <label>Camera Sensor:</label>
+          <select id="cmp-cam-a" class="custom-select">
+            {CAMERA_DATABASE.map(c => (
+              <option value={c.id} selected={c.id === 'canon-full-frame'}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Focal Length:</label>
+            <div class="input-with-unit">
+              <input type="number" id="cmp-focal-a" class="custom-input mono" value="50" min="4" max="1000" />
+              <span class="unit-text">mm</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Aperture:</label>
+            <div class="input-with-unit">
+              <span class="unit-prefix">f/</span>
+              <input type="number" id="cmp-aperture-a" class="custom-input mono" value="1.8" step="0.1" min="0.7" max="64" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Subject Distance:</label>
+          <div class="input-with-unit">
+            <input type="number" id="cmp-dist-a" class="custom-input mono" value="2.5" step="0.1" min="0.1" max="500" />
+            <span class="unit-text" id="cmp-dist-unit-a">m</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Setup A Result HUD -->
+      <div class="setup-results">
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Total Depth of Field:</span>
+          <span class="cmp-val mono cyan-text" id="cmp-res-dof-a">0.21 m (21 cm)</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Near / Far Limits:</span>
+          <span class="cmp-val mono" id="cmp-res-limits-a">2.40m - 2.61m</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Hyperfocal Distance:</span>
+          <span class="cmp-val mono" id="cmp-res-hyper-a">46.3 m</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Diagonal FOV:</span>
+          <span class="cmp-val mono" id="cmp-res-fov-a">46.8°</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS Divider -->
+    <div class="vs-divider">
+      <div class="vs-circle">VS</div>
+      <div class="vs-line"></div>
+    </div>
+
+    <!-- SETUP B -->
+    <div class="setup-card setup-b">
+      <div class="setup-badge badge-amber-setup">SETUP B (Comparison)</div>
+      
+      <div class="setup-controls">
+        <div class="form-group">
+          <label>Camera Sensor:</label>
+          <select id="cmp-cam-b" class="custom-select">
+            {CAMERA_DATABASE.map(c => (
+              <option value={c.id} selected={c.id === 'fujifilm-x'}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Focal Length:</label>
+            <div class="input-with-unit">
+              <input type="number" id="cmp-focal-b" class="custom-input mono" value="33" min="4" max="1000" />
+              <span class="unit-text">mm</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Aperture:</label>
+            <div class="input-with-unit">
+              <span class="unit-prefix">f/</span>
+              <input type="number" id="cmp-aperture-b" class="custom-input mono" value="1.4" step="0.1" min="0.7" max="64" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Subject Distance:</label>
+          <div class="input-with-unit">
+            <input type="number" id="cmp-dist-b" class="custom-input mono" value="2.5" step="0.1" min="0.1" max="500" />
+            <span class="unit-text" id="cmp-dist-unit-b">m</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Setup B Result HUD -->
+      <div class="setup-results">
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Total Depth of Field:</span>
+          <span class="cmp-val mono text-amber" id="cmp-res-dof-b">0.24 m (24 cm)</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Near / Far Limits:</span>
+          <span class="cmp-val mono" id="cmp-res-limits-b">2.38m - 2.62m</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Hyperfocal Distance:</span>
+          <span class="cmp-val mono" id="cmp-res-hyper-b">38.9 m</span>
+        </div>
+        <div class="cmp-stat-row">
+          <span class="cmp-label">Diagonal FOV:</span>
+          <span class="cmp-val mono" id="cmp-res-fov-b">47.4° (Matched)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comparison Summary Banner -->
+  <div class="comparison-verdict-box" id="cmp-verdict-box">
+    <div class="verdict-icon">⚡</div>
+    <div class="verdict-content">
+      <div class="verdict-title" id="cmp-verdict-title">Setup A produces 14.3% shallower Depth of Field (more background blur)</div>
+      <div class="verdict-desc" id="cmp-verdict-desc">
+        To achieve the exact same field of view and depth of field of Setup A (50mm f/1.8 on Full Frame) on Setup B (APS-C), you would need approximately a <strong>33mm f/1.2 lens</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .comparison-section {
+    padding: 1.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .comparison-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .comparison-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 0.35rem;
+  }
+
+  .comparison-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin-top: 0.25rem;
+  }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .setup-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .setup-a {
+    border-top: 3px solid var(--accent-cyan);
+  }
+
+  .setup-b {
+    border-top: 3px solid var(--accent-amber);
+  }
+
+  .setup-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+
+  .badge-amber-setup {
+    color: var(--accent-amber);
+  }
+
+  .form-group {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .input-with-unit {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .unit-text {
+    position: absolute;
+    right: 12px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+  }
+
+  .unit-prefix {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+  }
+
+  .input-with-unit input {
+    padding-right: 2rem;
+  }
+
+  .setup-results {
+    margin-top: 1rem;
+    background: var(--bg-input);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .cmp-stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .cmp-stat-row:last-child {
+    border-bottom: none;
+  }
+
+  .cmp-label {
+    color: var(--text-muted);
+  }
+
+  .cmp-val {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .text-amber { color: var(--accent-amber); }
+
+  .vs-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .vs-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 2;
+  }
+
+  .comparison-verdict-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 183, 3, 0.08), rgba(0, 229, 255, 0.05));
+    border: 1px solid rgba(255, 183, 3, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .verdict-icon {
+    font-size: 1.8rem;
+  }
+
+  .verdict-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .verdict-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 860px) {
+    .comparison-grid {
+      grid-template-columns: 1fr;
+    }
+    .vs-divider {
+      padding: 0.5rem 0;
+    }
+  }
+</style>

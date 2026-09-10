@@ -1,0 +1,293 @@
+---
+---
+
+<!-- Physical Lens Barrel DOF Scale Visualizer (Classic DOFMaster Style) -->
+<div class="glass-panel lens-scale-card">
+  <div class="lens-scale-header">
+    <div class="lens-title-group">
+      <div class="badge badge-amber" data-i18n="lens.title">Lens Distance Scale</div>
+      <h3 class="lens-title" data-i18n="lens.desc">Physical Lens Barrel Depth-of-Field Markings</h3>
+    </div>
+    <div class="lens-focal-badge mono" id="lens-barrel-focal-badge">50mm Lens</div>
+  </div>
+
+  <div class="lens-barrel-wrapper">
+    <div class="lens-barrel">
+      
+      <!-- Focus Distance Scale Ring (Top) -->
+      <div class="ring-row distance-ring-row">
+        <span class="ring-label">DIST (m)</span>
+        <div class="distance-scale-strip mono" id="distance-scale-strip">
+          <span class="dist-tick" style="left: 10%;">0.8</span>
+          <span class="dist-tick" style="left: 22%;">1.0</span>
+          <span class="dist-tick" style="left: 35%;">1.5</span>
+          <span class="dist-tick" style="left: 48%;">2.0</span>
+          <span class="dist-tick highlight-center" id="scale-subject-tick" style="left: 55%;">2.5</span>
+          <span class="dist-tick" style="left: 65%;">3.0</span>
+          <span class="dist-tick" style="left: 75%;">5.0</span>
+          <span class="dist-tick" style="left: 85%;">10</span>
+          <span class="dist-tick" style="left: 95%;">∞</span>
+        </div>
+      </div>
+
+      <!-- Center Index Line & Aperture Depth Wings (Middle) -->
+      <div class="ring-row dof-markings-row">
+        <span class="ring-label">DOF SCALE</span>
+        <div class="dof-wings-container">
+          <!-- Left Wing (Near Focus Boundary Marks) -->
+          <div class="wing-marks left-wing mono">
+            <span class="ap-mark mark-22">22</span>
+            <span class="ap-mark mark-16">16</span>
+            <span class="ap-mark mark-11">11</span>
+            <span class="ap-mark mark-8">8</span>
+            <span class="ap-mark mark-56">5.6</span>
+            <span class="ap-mark mark-4">4</span>
+          </div>
+
+          <!-- Center Focus Index Line -->
+          <div class="center-index-marker">
+            <div class="index-triangle">▼</div>
+            <div class="index-line"></div>
+          </div>
+
+          <!-- Right Wing (Far Focus Boundary Marks) -->
+          <div class="wing-marks right-wing mono">
+            <span class="ap-mark mark-4">4</span>
+            <span class="ap-mark mark-56">5.6</span>
+            <span class="ap-mark mark-8">8</span>
+            <span class="ap-mark mark-11">11</span>
+            <span class="ap-mark mark-16">16</span>
+            <span class="ap-mark mark-22">22</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aperture Ring (Bottom) -->
+      <div class="ring-row aperture-ring-row">
+        <span class="ring-label">APERTURE</span>
+        <div class="aperture-strip mono" id="barrel-aperture-strip">
+          <span class="ap-dial-val">1.4</span>
+          <span class="ap-dial-val">2</span>
+          <span class="ap-dial-val active" id="barrel-active-ap">2.8</span>
+          <span class="ap-dial-val">4</span>
+          <span class="ap-dial-val">5.6</span>
+          <span class="ap-dial-val">8</span>
+          <span class="ap-dial-val">11</span>
+          <span class="ap-dial-val">16</span>
+          <span class="ap-dial-val">22</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Active Depth Indicators Overlay -->
+    <div class="lens-dof-readout mono">
+      <div class="readout-item">
+        <span class="ro-label">Near Limit Mark:</span>
+        <span class="ro-val cyan-text" id="lens-near-mark">2.37 m</span>
+      </div>
+      <div class="readout-item">
+        <span class="ro-label">Focus Index:</span>
+        <span class="ro-val text-amber" id="lens-focus-mark">2.50 m</span>
+      </div>
+      <div class="readout-item">
+        <span class="ro-label">Far Limit Mark:</span>
+        <span class="ro-val text-green" id="lens-far-mark">2.65 m</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .lens-scale-card {
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .lens-scale-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .lens-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .lens-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .lens-focal-badge {
+    background: var(--accent-amber-glow);
+    color: var(--accent-amber);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid var(--accent-amber);
+  }
+
+  .lens-barrel-wrapper {
+    background: var(--bg-main);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    padding: 1.25rem;
+  }
+
+  .lens-barrel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-subtle);
+    padding: 0.85rem 1.25rem;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .ring-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .ring-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    width: 85px;
+    letter-spacing: 0.05em;
+  }
+
+  .distance-scale-strip {
+    flex: 1;
+    height: 32px;
+    background: var(--bg-input);
+    border-radius: var(--radius-sm);
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+  }
+
+  .dist-tick {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .dist-tick.highlight-center {
+    color: var(--accent-amber);
+    font-weight: 800;
+    background: var(--accent-amber-glow);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid var(--accent-amber);
+  }
+
+  .dof-wings-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+  }
+
+  .wing-marks {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .left-wing {
+    color: var(--accent-cyan);
+    direction: rtl;
+  }
+
+  .right-wing {
+    color: var(--accent-green);
+  }
+
+  .center-index-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+
+  .index-triangle {
+    color: var(--accent-amber);
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .index-line {
+    width: 2px;
+    height: 14px;
+    background: var(--accent-amber);
+    box-shadow: 0 0 6px var(--accent-amber);
+  }
+
+  .aperture-strip {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    background: var(--bg-input);
+    padding: 0.35rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .ap-dial-val.active {
+    background: var(--accent-cyan);
+    color: #090d16;
+    font-weight: 800;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--accent-cyan-glow);
+  }
+
+  [data-theme="light"] .ap-dial-val.active {
+    color: #ffffff;
+  }
+
+  .lens-dof-readout {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .readout-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .ro-label {
+    color: var(--text-muted);
+  }
+
+  .ro-val {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+</style>

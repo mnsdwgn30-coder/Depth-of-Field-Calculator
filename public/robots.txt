@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://depth-of-field-calculator.workers.dev/sitemap-index.xml
-Sitemap: https://depth-of-field-calculator.workers.dev/sitemap.xml
+Sitemap: https://depth-of-field-calculator.mnsdwgn30.workers.dev/sitemap-index.xml
+Sitemap: https://depth-of-field-calculator.mnsdwgn30.workers.dev/sitemap.xml
+
 
